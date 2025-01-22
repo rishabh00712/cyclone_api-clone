@@ -3,13 +3,13 @@ import requests
 import pickle
 import torch
 import numpy as np
-import pymongo
+
 from sklearn.preprocessing import StandardScaler
 import joblib
 import torch
 import torch.nn as nn  # This is where the nn module comes from
 from dotenv import load_dotenv
-import os
+
 
 load_dotenv()
 port = 3333
@@ -139,6 +139,10 @@ def weather_data():
        # Make the prediction
         with torch.no_grad():  # Disable gradient tracking for inference
             prediction = model(input_data)
+            
+        # Check and modify the prediction if needed
+        if prediction.item() > 100:
+         prediction = torch.tensor([95.0]) 
 
         # Print the predicted output (e.g., wind speed or some other metric)
         print(f"Predicted value: {prediction.item()}")
@@ -147,7 +151,9 @@ def weather_data():
         return jsonify({
         "latitude": latitude,
         "longitude": longitude,
-        "cyclone_probability": round(prediction.item(), 2)
+        "avg_surface_pressure":avg_surface_pressure,
+        "avg_wind_speed_10m":avg_wind_speed_10m,
+        "cyclone_probability %": round(prediction.item(), 2)
 })
 
 
