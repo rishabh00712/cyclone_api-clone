@@ -12,7 +12,7 @@ import torch.nn as nn  # This is where the nn module comes from
 from dotenv import load_dotenv
 
 load_dotenv()
-port = int(os.getenv('PORT'))
+port = int(os.getenv('PORT', 5000))
 
 # Initialize Flask app
 app = Flask(__name__)
