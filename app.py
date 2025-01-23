@@ -3,6 +3,7 @@ import requests
 import pickle
 import torch
 import numpy as np
+import os
 
 from sklearn.preprocessing import StandardScaler
 import joblib
@@ -11,7 +12,7 @@ import torch.nn as nn  # This is where the nn module comes from
 from dotenv import load_dotenv
 
 load_dotenv()
-port = 3333
+port = int(os.getenv('PORT'))
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -163,4 +164,4 @@ def weather_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port =3333)
+    app.run(debug=True, port = port)
